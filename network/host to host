@@ -1,0 +1,52 @@
+
+tcp/ip model
+
+application - layer 5,6 and 7
+transport - layer 4
+internet -layer 3
+data link - layer 2
+physical layer is not officially covered in the model 
+
+---
+
+host - host communicaiton 
+
+- I need to send a message from host A to host B
+- Usually a request to do something on host B(RPC)
+- Each host network card has a unique Media Access Control address(MAC)
+
+---
+Host to Host communication
+- A sends a message to B sepecifying the MAC address 
+- Everyone in the network will "get" the message but only B will accept it
+---
+
+host to host communication
+- imagine millons of machines?
+- we need a way to eliminates the need to sent it to everyone 
+- the address needs to get better
+- we need routability, meet the ip address
+
+---
+-> 스캔할 컴퓨터 수를 줄여야함
+host to host communication
+- the ip address is built in two parts
+- one part to identify the network, the other is the host
+- we use the network portion to eliminate many networks
+- the host part is used to find the host
+- still needs mac addresses!
+
+---
+
+
+host a on network n1 wants to talk to host B on network
+
+- but my host have many apps!
+-it's not enough just to address the host
+-the host is runnings many apps each with different requirements
+-Meet ports
+-같은 컴퓨터의 포트 82로 요청을 보낼 수 있고, 포트 53에서 dns요청을 하고 포트 22에서 요청을 한다
+
+-> 모두 같은 서버에서 실행된다
+
+- ip 주소외에 port가 필요
