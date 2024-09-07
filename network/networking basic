@@ -1,0 +1,58 @@
+-open communication
+-why do we need a communication model?
+
+7layer describe a specific networking component
+
+OSI model
+layer 7 - application - http/ftp/grpc
+layer 6 - presentaition - encoding , serialization
+layer 5 -session- connection establishment, tls
+layer 4- transport - udp/ tcp
+layer 3 - network -ip
+layer 2 - data link -frames, Mac address Ethernet
+layer 1 - physical - electric signals , fiber or radio waves
+
+osi layers - an example (sender)
+post
+7-serialze json to flat bytes string
+6-request to establish tcp connetion /tls
+5-send syn request target port 443
+4-syn is placed an ip packets
+3-each packet goes into a single frame and adds source /
+2-dest Mac address
+1-each frame becomes string of bits which convert into euther radio signal, electric signal
+
+receiver
+post 
+1-raio electric
+2-bits from layer 
+3-ip packet
+4-tcp segments / syn we dont need to go futher into more layers 
+5-session /connection session is established or identified
+		/ we only arrive at this layer when necessart
+6-deserialize flat byte sting back to json
+7-application / post request and your express jon of apache
+
+---
+
+client =-switch - router- server
+
+client -=application presentation sesison transport network datalink physical->
+(client)
+swith = data link physical-><-
+(layer 4 , proxy, firewall)
+router = network datalink physical -> <-
+(layer 7 load balancer /cdn)
+server = pysical datalink network transport session presentaition application ->
+(bakend server)
+
+
+---
+
+tcp/ip model
+
+application - layer 5,6 and 7
+transport - layer 4
+internet -layer 3
+data link - layer 2
+physical layer is not officially covered in the model 
