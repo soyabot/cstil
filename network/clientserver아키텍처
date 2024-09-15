@@ -1,0 +1,47 @@
+다른 곳에 실행 특정부분을 호출 
+
+
+clinet -server archetercture benefits
+
+server - 의존성
+client - 가볍
+네트워킹, 상호작용 = 인공지능 모델
+osi 
+
+open system interconnection model 
+protocol -거쳐야 
+
+protocol -router 
+
+osi model
+7 layers each describe a specific networking componet
+
+7 layer - http FTP
+6layer enconding serialization
+5layer session - connection establishment , TLS
+4layer - transport - udp/tcp
+3layer - network - ip
+2layer - data link - frames, mac address ethernet
+1layer- physical - electric signals , fiber or radio waves
+
+linker d - proxy 실제로 세션 층에 로직 구축
+
+physical
+data link
+network
+transport
+session
+presentation
+application
+
+json post
+
+
+https post request
+client - application presentation session
+transport network datalink physical
+->
+<- server 
+application pressentation session transport network datalink physical
+
+
