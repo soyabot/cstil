@@ -1,0 +1,79 @@
+
+예제
+
+원자성
+-트랜잭션을 시작했고, 업데이트를 했지만, 충돌이남
+모든것은 트랜잭션하나의 원자로서 완료되어야한다. 분할할 수 없다
+
+고립성
+- 첫 번째 세션에서 트랜잭션을 시작
+- 제품을 선택하고 제품의 수를 카운트
+
+-두번째 세션에서 트랜잭션을 시작 
+ - insert into sales (pid, price,quantity) valyes(1, 999.99, 10)
+ --insert 0 1
+ - uqdate products set inventory = inventory -10 where pid =1;
+ --update 1
+- commit;
+
+판매, 레코드출력 - 테이블과 카운트가 일치하지 않는다
+
+- 트랜잭션을 시작하면 건들지 않도록해야한다 -> 스냅샷을 얻으면 좋다
+
+postgres =# begin transaction isolation level repeatable read;
+고립 수준은 대부분의 경우에 적용되지만,  반복 가능한 읽기나 직렬화를 원할때가 있다
+
+why?
+고립수준이 다른 사람들이 변경한 것을 보지 못하도록 막기 때문이다
+
+지속성 - 무언가를 커밋했다고 말하면, 내가 다시 로그인하면 거기에 있어야한다
+
+유령읽기
+-더티 읽기, 반복되지 않는 읽기, 유령 일기 -> 세가지 트랜잭션이 동시에 발생할때 일어난다
+
+트랜잭션이 무언가를 수행하고 있는 동안 동시에 실행 중인 완전히 동시적인 다른 트랜잭션에서 원하지 않는 결과를 보게 된다. 
+
+다른 트랜잭션에서 새로운 행을 삽입, 고립된 트랜잭션에서 쿼리를 수행,  새로운 트랜잭션이 보면 안됨에도 불구하고 그 행을 보는 것
+t1--
+select * from sales
+begin transaction;
+select * from sales;
+select pid, sum(price) from sales group by pid;
+t2-- 판매시작
+-> 이상한 결과값이 나옴
+
+
+-- leve serializable
+
+begin transaction isolation level serializable;
+BEGIN
+select * from sales;
+commit;
+t2--판매시작
+could not serialize access
+
+
+
+일관성 - 데이터베이스 시스템 작업 중 데이터를 보거나 읽을때 결과를 나타내는 속성 
+궁극적 일관성 -특히 nosql 데이터베이스가 등장하기 시작하면서 생김
+일관성 데이터의 일관성이 있고 읽기 일관성이 있다
+
+consistency in data 
+-데이터의 여러관점과 표현, 외래키, 조인있는 경우에 발생
+본질적으로 데이터의 정규화된 관점을 가지고 있을 때 동일한 단위를 나타낸다 
+
+-defined by the user
+-referential integity (foregn keys)
+-atomicity
+-isolation
+
+
+consistency in reads 
+update x ->x
+read x->x
+
+eventual consistency
+master node x- >follwer node z-일관성이 없어짐
+
+캐싱을 도입하거나 팔로워 노드를 추가하여 수평확장을 시도할 때, 일관성이 없어진다
+
